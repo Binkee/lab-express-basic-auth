@@ -92,9 +92,6 @@ router.post("/signin", (req, res, next) => {
 //middleware to protect routes
 const checkLoggedInUser = (req, res, next) => {
     if (req.session.loggedInUser) {
-        router.get('/private', (req,res, next)=>{
-            res.render('private.hbs')
-        })
         next()
     }
     else {
@@ -107,8 +104,15 @@ router.get('/profile', checkLoggedInUser,  (req, res, next) => {
     res.render('profile.hbs', {username})
 })
 
+router.get('/private', checkLoggedInUser, (req, res, next) => {
+    let username = req.session.loggedInUser.username;
+    res.render('private.hbs', { username });
+  });
 
-
+  router.get('/main', checkLoggedInUser, (req, res, next) => {
+    let username = req.session.loggedInUser.username;
+    res.render('main.hbs', { username });
+  });
 //router.get(path, callback,callback,callback,callback,callback)
 
 
