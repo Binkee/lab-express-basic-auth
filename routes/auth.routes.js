@@ -92,6 +92,9 @@ router.post("/signin", (req, res, next) => {
 //middleware to protect routes
 const checkLoggedInUser = (req, res, next) => {
     if (req.session.loggedInUser) {
+        router.get('/private', (req,res, next)=>{
+            res.render('private.hbs')
+        })
         next()
     }
     else {
